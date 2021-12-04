@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jong.mapper.YtCrawlListMapper" >
+	<select id="getCrawlDatem" resultType="CrawlModel">
+		SELECT
+		*
+		FROM tbl_crawled
+		WHERE video_id=#{video_id}
+	</select>
+
+	<select id="getPublicCrawlList" resultType="Map">
+		SELECT
+		tc.idx,
+		tpc.crawled_idx,
+		tc.video_id,
+		tc.title,
+		tc.description,
+		tc.thumbnail_default,
+		tc.thumbnail_medium,
+		tc.thumbnail_high,
+		tc.channel_title,
+		tc.published_at,
+		tc.channel_id,
+		tc.path,
+		tc.filename,
+		tc.fullpath,
+		tc.created_at,
+		tc.updated_at
+		FROM tbl_crawled as tc
+		JOIN
+		tbl_public_crawled as tpc ON tc.idx=tpc.crawled_idx
+		LEFT JOIN (
+		SELECT
+		crawled_idx FROM tbl_private_crawled WHERE username=#{username}
+		) as
+		tpric1 ON tpric1.crawled_idx=tc.idx
+		GROUP BY tc.idx
+	</select>
+
+	<select id="getMyList" resultType="CrawlModel">
+		SELECT
+		*
+		FROM tbl_crawled
+		WHERE username=#{username}
+	</select>
+	
+</mapper>

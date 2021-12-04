@@ -1,0 +1,100 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>스프링 부트 웹서비스</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Korea Fishing</title>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+	integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ"
+	crossorigin="anonymous">
+<!-- include summernote css/js -->
+<link
+	href="https://cdn.jsdelivr.net/npm/summernote@0.8.16/dist/summernote.min.css"
+	rel="stylesheet">
+<script
+	src="https://cdn.jsdelivr.net/npm/summernote@0.8.16/dist/summernote.min.js"></script>
+</head>
+
+
+<body>
+	<section>
+		<div>test</div>
+		<div>
+			<button id="formdatatest" type="button" onclick="formdatatest()">formdata test</button>
+		</div>
+		<div>
+			<button id="formdatatest2" type="button" onclick="formdatatest2()">formdata test2</button>
+		</div>
+	</section>
+	
+	<form id="test_formdata_form">
+	</form>
+	
+	<form id="test_formdata_form2">
+	</form>
+</body>
+
+<script type="text/javascript">
+var formdatatest=function(){
+	var html1=`
+		<input name="t1" value="t1"/>
+		<input name="t2[0].a" value="a1"/>
+		<input name="t2[0].b" value="b2"/>
+		<input name="t2[1].a" value="a2"/>
+		<input name="t2[1].b" value="b2"/>
+	`;
+	$("#test_formdata_form").append(html1);
+    
+    $.ajax({
+    	url:"/test_formdata",
+        method: "POST",
+        data: $("#test_formdata_form").serialize(),
+        //dataType: 'json',
+        //processData: false,
+        //contentType: false,
+        success: function () {
+            console.log("completed!");
+        },
+        error: function () {
+            alert("failed! ")
+        }
+    });
+}
+
+var formdatatest2=function(){
+	var html1=`
+		<input name="testFormData2[0].a1" value="-1"/>
+		<input name="testFormData2[0].a2" value="a2"/>
+		<input name="testFormData2[1].a1" value="-1"/>
+		<input name="testFormData2[1].a2" value="a2"/>
+	`;
+	$("#test_formdata_form2").append(html1);
+    
+    $.ajax({
+    	url:"/test_formdata2",
+        method: "POST",
+        data: $("#test_formdata_form2").serialize(),
+        //dataType: 'json',
+        //processData: false,
+        //contentType: false,
+        success: function () {
+            console.log("completed!");
+        },
+        error: function () {
+            alert("failed! ")
+        }
+    });
+}
+</script>
+</html>
